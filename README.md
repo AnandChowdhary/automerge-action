@@ -133,6 +133,10 @@ The following merge options are supported:
   repositories. Set this option to `true` to automatically delete branches
   after they have been merged.
 
+- `PROTECT_BRANCHES`: A comma-separated list of branches that will not be deleted.
+  This is not the list of GitHub's protected branches, which are never deleted, but an
+  additional list of branches to protect. The default value is `""`.
+
 The following update options are supported:
 
 - `UPDATE_LABELS`: The labels that need to be present for a pull request to be
@@ -182,17 +186,17 @@ Also, the following general options are supported:
 You can configure the environment variables in the workflow file like this:
 
 ```yaml
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          MERGE_LABELS: "automerge,!work in progress"
-          MERGE_REMOVE_LABELS: "automerge"
-          MERGE_METHOD: "squash"
-          MERGE_COMMIT_MESSAGE: "pull-request-description"
-          MERGE_FORKS: "false"
-          MERGE_RETRIES: "6"
-          MERGE_RETRY_SLEEP: "10000"
-          UPDATE_LABELS: ""
-          UPDATE_METHOD: "rebase"
+env:
+  GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  MERGE_LABELS: "automerge,!work in progress"
+  MERGE_REMOVE_LABELS: "automerge"
+  MERGE_METHOD: "squash"
+  MERGE_COMMIT_MESSAGE: "pull-request-description"
+  MERGE_FORKS: "false"
+  MERGE_RETRIES: "6"
+  MERGE_RETRY_SLEEP: "10000"
+  UPDATE_LABELS: ""
+  UPDATE_METHOD: "rebase"
 ```
 
 ## Limitations
