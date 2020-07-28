@@ -133,9 +133,9 @@ The following merge options are supported:
   repositories. Set this option to `true` to automatically delete branches
   after they have been merged.
 
-- `PROTECT_BRANCHES`: A comma-separated list of branches that will not be deleted.
-  This is not the list of GitHub's protected branches, which are never deleted, but an
-  additional list of branches to protect. The default value is `""`.
+- `MERGE_DELETE_PROTECT_BRANCHES`: A comma-separated list of branches that will not
+  be deleted. This is not the list of GitHub's protected branches, which are never
+  deleted, but an additional list of branches to protect. The default value is `""`.
 
 The following update options are supported:
 
