@@ -133,7 +133,7 @@ The following merge options are supported:
   repositories. Set this option to `true` to automatically delete branches
   after they have been merged.
 
-- `MERGE_DELETE_PROTECT_BRANCHES`: A comma-separated list of branches that will not
+- `MERGE_DELETE_BRANCH_FILTER`: A comma-separated list of branches that will not
   be deleted. This is not the list of GitHub's protected branches, which are never
   deleted, but an additional list of branches to protect. The default value is `""`.
 
