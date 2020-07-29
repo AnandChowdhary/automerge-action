@@ -186,17 +186,17 @@ Also, the following general options are supported:
 You can configure the environment variables in the workflow file like this:
 
 ```yaml
-env:
-  GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-  MERGE_LABELS: "automerge,!work in progress"
-  MERGE_REMOVE_LABELS: "automerge"
-  MERGE_METHOD: "squash"
-  MERGE_COMMIT_MESSAGE: "pull-request-description"
-  MERGE_FORKS: "false"
-  MERGE_RETRIES: "6"
-  MERGE_RETRY_SLEEP: "10000"
-  UPDATE_LABELS: ""
-  UPDATE_METHOD: "rebase"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          MERGE_LABELS: "automerge,!work in progress"
+          MERGE_REMOVE_LABELS: "automerge"
+          MERGE_METHOD: "squash"
+          MERGE_COMMIT_MESSAGE: "pull-request-description"
+          MERGE_FORKS: "false"
+          MERGE_RETRIES: "6"
+          MERGE_RETRY_SLEEP: "10000"
+          UPDATE_LABELS: ""
+          UPDATE_METHOD: "rebase"
 ```
 
 ## Limitations
