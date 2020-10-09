@@ -56,10 +56,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: automerge
-        uses: "pascalgn/automerge-action@fc8281547d24638fac1e4149bbde710cced773d1"
+        uses: "pascalgn/automerge-action@v0.12.0"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 ```
+
+For the latest version, see the [list of releases](https://github.com/pascalgn/automerge-action/releases).
 
 ## Configuration
 
@@ -96,6 +98,14 @@ The following merge options are supported:
   or [`squash`](https://help.github.com/en/articles/about-pull-request-merges#squash-and-merge-your-pull-request-commits)
   (squash all commits into a single commit). The default option is `merge`.
 
+- `MERGE_METHOD_LABELS`: Set to allow labels to determine the merge method
+  (see `MERGE_METHOD` for possible values).
+  For example, `automerge=merge,autosquash=squash`. If no such label is present,
+  the method set by `MERGE_METHOD` will be used. The default value is `""`.
+
+- `MERGE_METHOD_LABEL_REQUIRED`: Set to `true` to require one of the
+  `MERGE_METHOD_LABELS` to be set. The default value is `false`.
+
 - `MERGE_COMMIT_MESSAGE`: The commit message to use when merging the pull
   request into the base branch. Possible values are `automatic` (use GitHub's
   default message), `pull-request-title` (use the pull request's title),
@@ -119,7 +129,7 @@ The following merge options are supported:
   or not. By default, pull requests with branches from forked repositories will
   be merged the same way as pull requests with branches from the main
   repository. Set this option to `false` to disable merging of pull requests
-  from forked repositories.
+  from forked repositories. The default value is `true`.
 
 - `MERGE_RETRIES` and `MERGE_RETRY_SLEEP`: Sometimes, the pull request check
   runs haven't finished yet, so the action will retry the merge after some time.
@@ -131,7 +141,7 @@ The following merge options are supported:
 
 - `MERGE_DELETE_BRANCH`: Automatic deletion of branches does not work for all
   repositories. Set this option to `true` to automatically delete branches
-  after they have been merged.
+  after they have been merged. The default value is `false`.
 
 - `MERGE_DELETE_BRANCH_FILTER`: A comma-separated list of branches that will not
   be deleted. This is not the list of GitHub's protected branches, which are never
@@ -199,15 +209,30 @@ You can configure the environment variables in the workflow file like this:
           UPDATE_METHOD: "rebase"
 ```
 
+## Supported Events
+
+Automerge can be configured to run for these events:
+
+* `check_run`
+* `check_suite`
+* `issue_comment`
+* `pull_request_review`
+* `pull_request_target`
+* `pull_request`
+* `push`
+* `repository_dispatch`
+* `schedule`
+* `status`
+* `workflow_dispatch`
+
+For more information on when these occur, see the Github documentation on [events that trigger workflows](https://docs.github.com/en/actions/reference/events-that-trigger-workflows) and [their payloads](https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads).
+
 ## Limitations
 
 - When a pull request is merged by this action, the merge will not trigger other GitHub workflows.
   Similarly, when another GitHub workflow creates a pull request, this action will not be triggered.
   This is because [an action in a workflow run can't trigger a new workflow run](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows).
 - When [using a personal access token (PAT) to work around the above limitation](https://help.github.com/en/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token), note that when the user issuing the PAT is an administrator and [branch restrictions do not include administrators](https://help.github.com/en/github/administering-a-repository/enabling-branch-restrictions), pull requests may be merged even if they are not mergeable for non-administrators (see [#65](https://github.com/pascalgn/automerge-action/issues/65)).
-- When a check from a build tools like Jenkins or CircleCI completes, GitHub
-  triggers the action workflow, but sometimes the pull request state is still
-  pending, blocking the merge. This is [an open issue](https://github.com/pascalgn/automerge-action/issues/7).
 - Currently, there is no way to trigger workflows when the pull request branch
   becomes out of date with the base branch. There is a request in the
   [GitHub community forum](https://github.community/t5/GitHub-Actions/New-Trigger-is-mergable-state/m-p/36908).
